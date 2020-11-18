@@ -1,8 +1,9 @@
 import numpy as np
 import torch
+from torch.distributions import Normal
 import torch.nn as nn
 import torch.nn.functional as func
-from torch.distributions import Normal
+
 from policies.generic_net import GenericNet
 
 
@@ -10,6 +11,7 @@ class NormalPolicy(GenericNet):
     """
      A policy whose probabilistic output is drawn from a Gaussian function
      """
+
     def __init__(self, l1, l2, l3, l4, learning_rate):
         super(NormalPolicy, self).__init__()
         self.relu = nn.ReLU()
@@ -30,7 +32,7 @@ class NormalPolicy(GenericNet):
         state = self.relu(self.fc1(state))
         state = self.relu(self.fc2(state))
         mu = self.fc_mu(state)
-        std = 1.5  # 20*self.softplus(self.fc_std(state))
+        std = self.fc_std(state)
         return mu, std
 
     def select_action(self, state, deterministic=False):
@@ -58,10 +60,10 @@ class NormalPolicy(GenericNet):
         :return: the loss applied to train the policy
         """
         action = torch.FloatTensor(action)
-        reward = torch.FloatTensor(reward) 
+        reward = torch.FloatTensor(reward)
         mu, std = self.forward(state)
         # Negative score function x reward
-        loss = -Normal(mu, std).log_prob(action) * reward  
+        loss = -Normal(mu, std).log_prob(action).view(-1).matmul(reward)
         self.update(loss)
         return loss
 

@@ -3,9 +3,7 @@ from itertools import count
 from batch import Episode, Batch
 from environment import make_env
 from algo import Algo
-from visu.visu_trajectories import plot_trajectory
-from visu.visu_weights import plot_weight_histograms, plot_normal_histograms
-
+from visu.visu_policies import plot_policy
 
 def make_simu_from_params(params):
     """
@@ -157,6 +155,9 @@ class Simu:
             if self.best_reward < total_reward:
                 self.best_reward = total_reward
                 pw.save(self.best_reward)
+            if cycle % 20 == 0:
+                plot_policy(policy, self.env, True, self.env_name, study_name,
+                            '_cycle_', cycle, plot=False)
 
     def make_monte_carlo_batch(self, nb_episodes, render, policy):
         """
