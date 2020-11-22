@@ -1,0 +1,63 @@
+\documentclass{article}
+\usepackage{geometry}
+\usepackage{polyglossia}
+\usepackage{graphicx,float}
+\usepackage{subcaption}
+\usepackage{titling}
+\usepackage{fancyhdr}
+\usepackage{booktabs}
+\usepackage{subcaption}
+\usepackage{hyperref}
+\usepackage{listings}
+\usepackage{mathtools}
+
+\geometry{
+    a4paper,
+    margin=2cm,
+    head=30pt,
+}
+
+\setdefaultlanguage{french}
+
+\graphicspath{ {./figures/} }
+
+\lstset{language=Python} 
+
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    filecolor=magenta,      
+    urlcolor=cyan,
+    pdfpagemode=FullScreen,
+}
+
+\title{Basic Policy gradient Lab}
+\author{Florentin Beroujon \and Florian Cormée }
+\date{Novembre 2020}
+
+\fancyhf{}
+\lhead{\theauthor}
+\chead{\textbf{\thetitle}}
+\rhead{\thedate}
+\cfoot{\thepage}
+\pagestyle{fancy}
+
+\begin{document}
+
+\maketitle
+
+\section{Introduction}
+
+\section{Analyse des résultats préliminaires}
+\input{sections/code_prof/resultats_preliminaires}
+
+\section{Itérations de simulation}
+\input{sections/code_prof/iteration1}
+\input{sections/code_prof/iteration2}
+\input{sections/code_prof/iteration3}
+\input{sections/code_prof/iteration4}
+
+\section{Algorithme \emph{Soft Actor Critic}}
+\input{sections/sac/presentation}
+\input{sections/sac/first_result/resultats_preliminaire}
+\end{document}
