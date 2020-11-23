@@ -1,3 +1,2 @@
-from critics.v_network import VNetwork
-from critics.q_network_continuous import QNetworkContinuous
-from critics.q_network_discrete import QNetworkDiscrete
+from critics.double_q_net import DoubleQNet
+from critics.q_net import QNet
