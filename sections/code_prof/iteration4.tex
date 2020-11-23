@@ -2,7 +2,7 @@
 
 \subsubsection{Configuration, modifications et résultats attendus}
 
-Nous avons une autre idée de la cause de ces résultats décevant. Il pourrait s'agir d'un manque d'exploration. Donc nous essayons d'utiliser un nombre bien plus grand d'épisodes. On prend 800 cycles composés de 200 épisodes.
+Nous avons une autre idée de la cause de ces résultats décevants. Il pourrait s'agir d'un manque d'exploration. Donc nous essayons d'utiliser un nombre bien plus grand d'épisodes. Nous prenons 800 cycles composés de 200 épisodes.
 
 Nous espérons voir une décroissance de la perte de la critique et de la politique et une augmentation de la récompense. Si c'est le cas, alors le problème est effectivement un manque de données d'exploration. Si nous n'obtenons pas de résultats concluants nous nous pencherons sur une nouvelle implémentation d'algorithme par renforcement profond.
 
@@ -26,7 +26,7 @@ Nous espérons voir une décroissance de la perte de la critique et de la politi
     \label{fig:itr4_results}
 \end{figure}
 
-Malgré l'augmentation de l'exploration et du nombre de trajectoire par \emph{batch}, les résultats obtenus sont très similaires et rien ne s'est amélioré. On attend toujours que la fonction de perte de la critique finisse par décroître. Le comportement singulier des pertes sur la politique nous interroge toujours autant. Enfin, la récompense n'a pas évoluer malgré le grand nombre d'itération
+Malgré l'augmentation de l'exploration et du nombre de trajectoire par \emph{batch}, les résultats obtenus sont très similaires et rien ne s'est amélioré. Nous attendons toujours que la fonction perte de la critique finisse par décroître. Le comportement singulier des pertes sur la politique nous interroge toujours autant. Enfin, la récompense n'a pas évoluer malgré le grand nombre d'itérations.
 
 \begin{figure}[H]
     \centering
@@ -64,4 +64,4 @@ Malgré l'augmentation de l'exploration et du nombre de trajectoire par \emph{ba
     \label{fig:itr4_normalize}
 \end{figure}
 
-Ces graphes sur les figures~\ref{fig:itr4_discount} et \ref{fig:itr4_normalize} confirment que le problème ne vient pas de l'exploration mais plutôt de l'apprentissage en lui-même. Le problème est probablement lié à l'implémentation. Puisque le projet contient un nombre conséquent de classes, nous n'approfondirons par plus les recherches et nous implémentons un algorithme de \emph{policy grandient}.
+Ces graphes sur les figures~\ref{fig:itr4_discount} et \ref{fig:itr4_normalize} confirment que le problème ne vient pas de l'exploration mais plutôt de l'apprentissage en lui-même. Le problème est surement lié à l'implémentation. Puisque le projet contient un nombre conséquent de classes, nous n'approfondirons pas plus les recherches et nous implémentons un algorithme de \emph{policy grandient}.

@@ -18,10 +18,10 @@
             & \(\tau\) & 0,01\\
             \bottomrule
         \end{tabular}
-    \caption{Tableaux de la configuration initiale du \emph{Soft Actor Critic}}\label{tab:sac:initial_settings}
+    \caption{Tableau de la configuration initiale du \emph{Soft Actor Critic}}\label{tab:sac:initial_settings}
 \end{table}
 
-Le tableau~\ref{tab:sac:initial_settings} présente les paramètres utilisés pour
+Le tableau~\ref{tab:sac:initial_settings} précise les paramètres utilisés pour
 les résultats préliminaires présentés ci-dessous.
 
 \begin{figure}[H]
@@ -51,8 +51,8 @@ est opposé et proportionnel à la vitesse du pendule. Cela à pour effet d'amen
 le pendule vers le haut.
 
 Nous observons que la critique a une valeur très négative quand le pendule est
-en bas à vitesse nulle ou en haut à vitesse élevé. Ce résultat est attendu
-puisqu'il s'agit des états qui conduisent à avoir une plus faible récompense.
+en bas à vitesse nulle ou en haut à vitesse élevée. Ce résultat est attendu
+puisqu'il s'agit des états qui conduisent à avoir une meilleure récompense.
 
 \begin{figure}[H]
     \centering
@@ -72,18 +72,13 @@ puisqu'il s'agit des états qui conduisent à avoir une plus faible récompense.
 \end{figure}
 
 La figure~\ref{fig:sac:preli_failed} présente un acteur et une critique mal
-entrainée au cours de la même exécution. En effet, nous avons répété 10 fois
+entrainés au cours de la même exécution. En effet, nous avons répété 10 fois
 l'expérience. À toutes les itérations, les deux critiques sont similaires. Nous
 n'en présenterons plus qu'une dans la suite de ce document.
 
-Nous observons que les transitions des valeurs sont très dousses
-particulièrement quand la vitesse est négative. Cela indique une mauvaise
-exploration.
+Nous observons que pour des vitesses négatives n'exploration n'a pas suffit à l'apprentissage.
 
-De la même façon, la critique a des variations très dousses qui indique un
-mauvais apprentissage.
-
-Ces deux résultats sont communs au cours de nos 10 itérations.
+Ces deux résultats (fig \ref{fig:sac:preli_success} et \ref{fig:sac:preli_failed}) sont communs au cours de nos 10 itérations.
 
 \begin{figure}[H]
     \centering
@@ -102,8 +97,7 @@ Ces deux résultats sont communs au cours de nos 10 itérations.
     \caption{Résultats obtenus par 10 répétitions avec les paramètres initiaux}\label{fig:sac:results}
 \end{figure}
 
-D'après la figure~\ref{fig:sac:results}, la perte de la critique est très bruité
-néanmoins, les valeurs sont croissantes, mais reste très faibles. Donc
+D'après la figure~\ref{fig:sac:results}, la perte de la critique est très bruitée et croissantes, mais reste néanmoins très faibles. Donc
 l'apprentissage de la critique se déroule bien.
 
 La perte de la politique croit initialement. Ce comportement est tout à fait

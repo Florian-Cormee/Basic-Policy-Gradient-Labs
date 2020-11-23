@@ -2,11 +2,11 @@
 
 \subsubsection{Configuration, modifications et résultats attendus}
 
-Nous redimensionnons la récompense à nouveau de sorte à ce que la récompense sur un épisode soit compris entre $0$ et $100$. En faisant cela, nous souhaitons réduire l'amplitude de la récompense et avec le bruit associé. En réduisant le bruit, le gradient converge plus facilement vers un minimum.
+Nous redimensionnons la récompense à nouveau de sorte à ce que la récompense sur un épisode soit compris entre $0$ et $100$. En faisant cela, nous souhaitons réduire l'amplitude de la récompense et le bruit associé. En réduisant le bruit, le gradient converge plus facilement vers un minimum.
 
 Pour borner la récompense sur un épisode entre $0$ et $100$, nous divisons l'équation~\ref{eq:itr2_rescale} par le nombre de pas par épisode soit $200$.
 
-Nous attendons à avoir une récompense par épisode bornée par $0$ et par $100$. Par la réduction d'échelle, nous attendons à obtenir une courbe moins bruitée et croissante. En effet, la réduction du bruit permet une variation plus fine est poids et des biais.  Donc d'avoir une évolution plus douce. Celle-ci permet de converger vers un minimum ce qui améliore la politique et par conséquent la récompense.
+Nous attendons à avoir une récompense par épisode bornée par $0$ et par $100$. Par la réduction d'échelle, nous attendons à obtenir une courbe moins bruitée et croissante. En effet, la réduction du bruit permet une variation plus fine des poids et des biais.  Donc avoir une évolution plus douce. Celle-ci permet de converger vers un minimum ce qui améliore la politique et par conséquent la récompense.
 
 \subsubsection{Analyse}
 
@@ -30,9 +30,9 @@ Nous attendons à avoir une récompense par épisode bornée par $0$ et par $100
 
 Nous observons que notre récompense est bien bornée entre 0 et 100 mais ne croît pas comme espéré. La récompense obtenue par la méthode \emph{discount} semble même se stabiliser aux alentours de 60.
 
-Nous observons que la fonction de perte de la politique est relativement constante. Ce résultat est tout à fait singulier. Nous en déduisons qu'il y a un problème dans l'apprentissage de la politique. Malheureusement, nous ne somme pas parvenu à identifier le problème
+Nous observons que la fonction de perte de la politique est relativement constante. Ce résultat est tout à fait singulier. Nous en déduisons qu'il y a un problème dans l'apprentissage de la politique. Malheureusement, nous ne somme pas parvenu à identifier le problème.
 
-Comme précédemment, la fonction de perte de la critique ne décroît toujours pas.
+Comme précédemment, la fonction de perte de la critique ne décroît pas.
 
 \begin{figure}[H]
     \centering
@@ -52,9 +52,9 @@ Comme précédemment, la fonction de perte de la critique ne décroît toujours 
     \label{fig:itr3_discount}
 \end{figure}
 
-La plage d'action de l'acteur n'est pas cohérente avec ce que l'on attend. nous préférerions une plage d'action comprise entre $-2$ et $2$. L'apprentissage définitivement mauvais car où qu'il soit et peu importe sa vitesse, il continuera de tourner.
+La plage d'action de l'acteur n'est pas cohérente avec ce que l'on attend. nous préférerions une plage d'action comprise entre $-2$ et $2$. L'apprentissage est définitivement mauvais car où qu'il soit et peu importe sa vitesse, il continuera de tourner.
 
-La critique n'est toujours pas intéressante au vu de ses zones de préférence sur l'ensemble de l'intervalle de $\cos(\theta)$. De plus, la critique semble aussi favoriser la position en bas du pendule avec une vitesse faible qui ne lui feras pas quitter cet été pourtant à éviter.
+La critique n'est toujours pas intéressante au vu de ses zones de préférence sur l'ensemble de l'intervalle de $\cos(\theta)$. De plus, la critique semble aussi favoriser la position en bas du pendule avec une vitesse faible qui ne lui fera pas quitter cet état pourtant à éviter.
 
 \begin{figure}[H]
     \centering
@@ -76,4 +76,4 @@ La critique n'est toujours pas intéressante au vu de ses zones de préférence 
 
 La méthode \emph{normalize} ne présente toujours pas d'acteur entraîné correctement. Dans ce cas, la politique va faire tourner le pendule à la même vitesse et dans le même sens peu importe son état.
 
-La critique, quant à elle, semble bien défavoriser le fait d'être en bas du pendule mais préfère être à grande vitesse une fois en haut. Cela n'est donc toujours pas ce que l'on attend.
+La critique, quant à elle, semble bien défavoriser le fait d'être en bas du pendule mais préfère être à grande vitesse une fois en haut. Cela n'est donc toujours pas ce que nous attendons.

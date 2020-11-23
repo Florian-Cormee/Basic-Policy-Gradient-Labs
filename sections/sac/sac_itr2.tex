@@ -29,7 +29,7 @@ politiques optimales même après seulement 400 épisodes. L'étude est toujours
     \label{fig:sac:results2}
 \end{figure}
 
-La fonction de perte de la critique semble légèrement décroite autour du 350e épisode. La fonction de perte de la politique n'a pas beaucoup évoluer mais la moyenne obtenue sur les $10$ répétitions semble plus stable. C'est dur d'affirmer que cela est effectivement dû à l'initialisation de $\alpha$ à $0.02$. De plus, cette fois-ci, la récompense moyenne obtenue sur les 10 répétitions a dépassé les $250$ de score. Cela nous pousse à croire que l'initialisation était une bonne idée.
+La fonction de perte de la critique semble légèrement décroite autour du 350e épisode. La fonction de perte de la politique n'a pas beaucoup évolué mais la moyenne obtenue sur les $10$ répétitions semble plus stable. C'est dur d'affirmer que cela est effectivement dû à l'initialisation de $\alpha$ à $0.02$. De plus, cette fois-ci, la récompense moyenne obtenue sur les 10 répétitions a dépassé un score de  $-250$. Cela nous pousse à croire que l'initialisation était une bonne idée.
 
 \begin{figure}[H]
     \centering
@@ -45,4 +45,4 @@ La fonction de perte de la critique semble légèrement décroite autour du 350e
     \label{fig:sac:itr2}
 \end{figure}
 
-Avec le ratio d'apprentissage de \(\alpha\) à $0.02$, l'ensemble des résultats obtenus sont cohérents et quasi similaires. Certaines itérations présentent encore une faible exploration d'un coté du pendule. Mais nous n'observons pas de cas critique comme sur la figure~\ref{fig:sac:preli_failed}. En effet, la forme de la politique désirée ressemble à un \(>\) de couleur clair. Si le \(\cos(\theta) = -1\) le pendule est en bas et ne doit pas être à une vitesse faible (une zone sombre). Si le \(\cos(\theta) = 1\), alors le pendule est en haut et doit alors rester immobile. Cet état est à favoriser pour maximiser la récompense (zone claire).
+Avec le ratio d'apprentissage de \(\alpha\) à $0.02$, l'ensemble des résultats obtenus sont cohérents et quasi similaires. Certaines itérations présentent encore une faible exploration d'un coté du pendule. Mais nous n'observons pas de cas critique comme sur la figure~\ref{fig:sac:preli_failed}. En effet, la forme de la politique désirée ressemble à un chevron \(>\) de couleur clair. Si le \(\cos(\theta) = -1\) le pendule est en bas et ne doit pas être à une vitesse faible (une zone sombre). Si le \(\cos(\theta) = 1\), alors le pendule est en haut et doit alors rester immobile. Cet état est à favoriser pour maximiser la récompense (zone claire).

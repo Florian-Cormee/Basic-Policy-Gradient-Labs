@@ -5,13 +5,13 @@
 Nous décidons d'augmenter le nombre d'épisodes qui servent à entrainer notre
 algorithme. Comme le montre les courbes de la perte de la politique des
 figures~\ref{fig:sac:results2} et~\ref{fig:sac:results3}, à partir de \(300\)
-épisodes, la fonction est décroissante. Nous décidons de tripler le nombre
+épisodes, la fonction est décroissante. Nous décidons d'augmenter le nombre
 d'épisodes (\(1500\) épisodes) pour voir si la fonction perte de la politique
 converge vers \(0\) comme nous pouvons l'espérer.
 
 Nous avons vu en fixant le paramètre \(\alpha\), une convergence qui semble être
-plus rapide. Nous allons le vérifier en faisant une exécution à \(\alpha\)
-constant et appris sur \(1500\) épisodes répétés \(10\) fois. Nous pensons
+plus rapide. Nous allons le vérifier en faisant une exécution pour \(\alpha\)
+constant et pour \(\alpha\) appris sur \(1500\) épisodes répétés \(10\) fois. Nous pensons
 qu'avec ce paramètre fixé, la convergence sera un peu plus rapide.
 
 \subsubsection{Résultats et analyse}
@@ -29,11 +29,11 @@ qu'avec ce paramètre fixé, la convergence sera un peu plus rapide.
     \caption{Comparaison des fonctions de perte des critiques}\label{fig:sac:critics_loss4}
 \end{figure}
 
-Nous observons que la tendance générale est commune dans les deux cas. Au début
+Nous observons sur la figure~\ref{fig:sac:critics_loss4} que la tendance générale est commune dans les deux cas. Au début
 de l'apprentissage, la perte est très bruitée et croît légèrement avant de
 tendre vers zero avec moins de bruit. Cependant lorsque \(\alpha\) est appris,
 la phase de décroissance de la perte est plus lente et présente plus
-d'irrégularités. Nous pouvons affirmer que la fixation d'\(\alpha\) est une
+d'irrégularités. Nous pouvons affirmer que la fixation de \(\alpha\) est une
 bonne idée.
 
 \begin{figure}[H]
@@ -49,8 +49,8 @@ bonne idée.
     \caption{Comparaison des fonctions de perte des politique}\label{fig:sac:policy_loss4}
 \end{figure}
 
-L'évolution globale de la fonction de perte de la politique est également
-identique aux deux cas. Nous pouvons cependant constater que la répétabilité de l'expérience est meilleur avec la fixation de \(\alpha\). Cette fixation ajoute aussi une meilleur stabilité dans la décroissance de la fonction perte et baisse légèrement le minimum atteint en fin d'apprentissage. En effet, il passe de \(\approx 2.5\) à \(\approx 1.8\) avec la fixation. Finalement, nous observons que la raideur de la pente de la fonction après \(200\) épisodes plus élevée lorsque \(\alpha\) n'est pas appris. La fonction atteint la valeur \(7.5\) vers le \(500\)e épisode lorsque \(\alpha\) est fixé alors qu'elle atteint la même valeur autour du \(600\)e épisode lorsque \(\alpha\) est appris. Cela conforte notre opinion sur la fixation de ce paramètre.
+L'évolution globale de la fonction de perte de la politique sur la figure~\ref{fig:sac:policy_loss4} est également
+identique aux deux cas. Nous pouvons cependant constater que la répétabilité de l'expérience est meilleur avec la fixation de \(\alpha\). Cette fixation ajoute aussi une meilleur stabilité dans la décroissance de la fonction perte et baisse légèrement le minimum atteint en fin d'apprentissage. En effet, il passe d'environ \( 2.5\) à environ \( 1.8\) avec la fixation. Finalement, nous observons que la raideur de la pente de la fonction après \(200\) épisodes est plus élevée lorsque \(\alpha\) n'est pas appris. La fonction atteint la valeur \(7.5\) vers le \(500\)e épisode lorsque \(\alpha\) est fixé alors qu'elle atteint la même valeur autour du \(600\)e épisode lorsque \(\alpha\) est appris. Cela conforte notre opinion sur la fixation de ce paramètre.
 
 \begin{figure}[H]
     \centering
@@ -65,7 +65,7 @@ identique aux deux cas. Nous pouvons cependant constater que la répétabilité 
     \caption{Comparaison des récompenses obtenues}\label{fig:sac:rewards4}
 \end{figure}
 
-Encore une fois, les courbes sont similaires et ne présentent que de légères différences. Lorsque le paramètre \(\alpha\) est fixé l'évolution de la récompense est plus stable et confirme définitivement que nous devons garder \(\alpha\) fixe pour avoir une politique optimale et efficace sur de nombreuse trajectoires.
+Encore une fois, les courbes de la figure~\ref{fig:sac:rewards4} sont similaires et ne présentent que de légères différences. Lorsque le paramètre \(\alpha\) est fixé l'évolution de la récompense est plus stable et confirme définitivement que nous devons garder \(\alpha\) fixe pour avoir une politique optimale et efficace sur de nombreuse trajectoires.
 
 \begin{figure}[H]
     \centering
@@ -80,4 +80,4 @@ Encore une fois, les courbes sont similaires et ne présentent que de légères 
     \caption{Politique et critique obtenues après apprentissage avec \(\alpha\) fixé}\label{fig:sac:heatmap4}
 \end{figure}
 
-Nous pouvons voir sur la figure~\ref{fig:sac:heatmap4} que nous avons un chevron > bien prononcé sur la \emph{heatmap} de la critique. Ce chevron permet d'expliquer la transition douce sur la \emph{heatmap} de la politique pour les valeurs négatives de \(\cos(\theta)\) peu importe le sens de rotation initiale du pendule. Ce résultat n'est pas aussi probant lorsque \(\alpha\) est appris. Il resterai encore à paufiner la zone autour de \(\cos(\theta) = 1\) pour avoir un système le plus efficace paussible.
+Nous pouvons voir sur la figure~\ref{fig:sac:heatmap4} que nous avons un chevron > bien prononcé sur la \emph{heatmap} de la critique. Ce chevron permet d'expliquer la transition douce sur la \emph{heatmap} de la politique pour les valeurs négatives de \(\cos(\theta)\), et ce quelque soit le sens de rotation initiale du pendule. Ce résultat n'est pas aussi probant lorsque \(\alpha\) est appris. Il resterai encore à paufiner la zone autour de \(\cos(\theta) = 1\) pour avoir un système le plus efficace paussible.

@@ -3,8 +3,8 @@
 \subsubsection{Configuration, modifications et résultats attendus}
 
 Nous savons que pour un \emph{Soft Actor Critic} le paramètre \(\alpha\) gérant
-l'entropie peut être fixé ou non en fonction du problème. Jusque maintenant,
-nous faisions apprendre ce paramètre à l'algorithme. Nous souhaitons désormais tester les performances avec une valeur de \(0.02\). On espère que l'évolution des fonctions de pertes soit plus efficace.
+l'entropie peut être fixé, ou non, en fonction du problème. Jusque maintenant,
+nous faisions apprendre ce paramètre à l'algorithme. Nous souhaitons désormais tester les performances avec une valeur de \(0.02\) fixe. Nous nous attendons à ce que la phase de décroissance des fonctions de pertes soit plus importante.
 
 \subsubsection{Analyse}
 
@@ -27,6 +27,8 @@ perte de la politique décroit également plus rapidement.
 
 Avec seulement \(400\) épisodes, les courbes des fonctions de coût des deux
 critiques de SAC ne sont pas bien différentes de l'étude précédente
-(fig~\ref{fig:sac:results2}). Les graphes des valeurs de la politique et des
-critiques sont très ressemblantes à celles déjà obtenues. Nous avons jugé non
+(fig~\ref{fig:sac:results2}). 
+
+Les \emph{heatmaps} de la politique et des
+critiques sont très ressemblantes à celles déjà obtenues. Nous n'avons pas jugé
 nécessaire de les présenter ici.

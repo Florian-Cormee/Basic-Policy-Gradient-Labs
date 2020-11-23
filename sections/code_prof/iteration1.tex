@@ -2,7 +2,7 @@
 
 \subsubsection{Configuration et modifications}
 
-Nous décidons de ne plus utiliser de \emph{squashed gaussian} dans l'évaluation de l'acteur. Cela nous permet de voir plus finement le comportement de la distribution normal que cache la fonction tangente hyperbolique. A la place, nous choisissons de calculer l'action à partir une distribution normale dont l'écart-type est imposé à $1,5$ pour qu'il y ait de l'exploration en tout temps.
+Nous décidons de ne plus utiliser de \emph{squashed gaussian} dans l'évaluation de l'acteur. Cela nous permet de voir plus finement le comportement de la distribution normal que cache la fonction tangente hyperbolique. A la place, nous choisissons de calculer l'action à partir d'une distribution normale dont l'écart-type est imposé à $1,5$ pour qu'il y ait de l'exploration en tout temps.
 
 Nous décidons de ne plus calculer le gradient par sommation des récompenses pour réduire le temps de calcul.
 
@@ -26,7 +26,7 @@ Nous décidons de ne plus calculer le gradient par sommation des récompenses po
     \label{fig:attempt1_disount}
 \end{figure}
 
-Avec l'évaluation de l'acteur \emph{normal} dans la figure~\ref{fig:attempt1_disount}, la critique et l'acteur obtenus après entraînement sont quasi identiques. Mais les \emph{heatmaps} de ces derniers ne sont pas du tout satisfaisantes. En effet, la zone de préférence est située dans l'intervalle positif des vitesses angulaires. Or nous ne souhaitons absolument pas que l'IA favorise un mouvement mais une position d'équilibre en haut du pendule.
+Avec l'évaluation de l'acteur \emph{normal} dans la figure~\ref{fig:attempt1_disount}, la critique et l'acteur obtenus après entraînement sont quasiment identiques. Mais les \emph{heatmaps} de ces derniers ne sont pas du tout satisfaisantes. En effet, la zone de préférence est située dans l'intervalle positif des vitesses angulaires. Or nous souhaitons que l'IA favorise une position d'équilibre en haut du pendule.
 
 \begin{figure}[H]
     \centering
@@ -46,7 +46,7 @@ Avec l'évaluation de l'acteur \emph{normal} dans la figure~\ref{fig:attempt1_di
     \label{fig:attempt1_normalize}
 \end{figure}
 
-Sur la figure~\ref{fig:attempt1_normalize} mis à part l'acteur naïf qui est différent parce qu'il est généré aléatoirement, l'acteur et la critique après entraînement sont identiques à ceux obtenus avec \emph{discount}. Ces résultats ne sont pas satisfaisant non plus.
+Sur la figure~\ref{fig:attempt1_normalize} mis à part l'acteur naïf qui est différent parce qu'il est généré aléatoirement, l'acteur et la critique après entraînement sont identiques à ceux obtenus avec \emph{discount}. Ces résultats ne sont pas satisfaisants non plus.
 
 \begin{figure}[H]
     \centering
@@ -66,4 +66,4 @@ Sur la figure~\ref{fig:attempt1_normalize} mis à part l'acteur naïf qui est di
     \label{fig:attempt1_results}
 \end{figure}
 
-La figure~\ref{fig:attempt1_results} montre la perte de la méthode \emph{discount} se stabilise au bout de 350 cycles tandis que celle de la méthode \emph{normalize} continu de diverger. La fonction de perte de la critique est très mauvaise avec un ordre de grandeur de $1e15$ pour la perte. Mais on peut voir que la critique de la méthode \emph{normalize} est légèrement meilleur. Enfin la courbe des récompenses ne montre pas de convergence vers 0 que l'on attend. A contrario, il semble rester stagner au minimum, c'est à dire en bas du pendule, entre les épisodes.
+La figure~\ref{fig:attempt1_results} montre que la perte de la méthode \emph{discount} se stabilise au bout de 350 cycles tandis que celle de la méthode \emph{normalize} continu de diverger. La fonction de perte de la critique est très mauvaise avec un ordre de grandeur de $10^{15}$ pour la perte. Mais nous pouvons voir que la critique de la méthode \emph{normalize} est légèrement meilleure. Enfin la courbe des récompenses ne montre pas de convergence vers 0 que nous attendons. A contrario, il semble rester stagner au minimum, c'est à dire en bas du pendule, entre les épisodes.

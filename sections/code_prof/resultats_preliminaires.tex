@@ -20,12 +20,27 @@ Le tableau~\ref{tab:initial_settings} présente les paramètres de notre premiè
             & Duration of an episode & $ 200 $ steps \\
             \bottomrule
         \end{tabular}
-    \caption{Tableaux de la configuration initiale de la \emph{policy gradient research}}\label{tab:initial_settings}
+    \caption{Tableau de la configuration initiale de la \emph{policy gradient research}}\label{tab:initial_settings}
 \end{table}
 
-Puisque la \emph{squashed gaussien} force la politique à fournir une action entre  $ 0 $ et $ 1 $, nous décidons de doubler cette valeur dans le \emph{wrapper} du \emph{pendulum}. Cela permet à l'agent d'utiliser tout sont espace d'action.
+Puisque la \emph{squashed gaussien} force la politique à fournir une action
+entre  $ 0 $ et $ 1 $, nous décidons de doubler cette valeur dans le
+\emph{wrapper} du \emph{pendulum}. Cela permet à l'agent d'utiliser tout sont
+espace d'action.
 
-Le problème du pendule inversé définit son état par le n--uplet $ (\cos(\theta), \sin(\theta), \dot{\theta}) $. Pour l'affichage de la critique et de l'acteur, nous pensons que $ \cos(\theta) $ et $ \dot{\theta} $ sont les paramètres les plus importants. En effet, $ \cos(\theta) $ et $ \sin(\theta) $ ont des informations similaires sur l'état. Comme la référence de $ \theta $ est en haut, le cosinus nous donne l'information sur la hauteur du pendule et le sinus nous dit de quel côté il se trouve. Puisque la récompense est calculée selon l'équation~\eqref{eq:reward}, nous savons que seul la hauteur du pendule est récompensée. Par conséquent $ \sin(\theta) $ ne fournit pas une information utile sur la récompense donnée à l'agent. Donc nous décidons d'afficher les graphes de la critique et de l'acteur en fonction de $ \cos(\theta) $ et $ \dot{\theta} $. Pour ce faire, nous ajoutons un \emph{wrapper} pour échanger la seconde composante de l'état avec la dernière.
+Le problème du pendule inversé définit son état par le n--uplet $ (\cos(\theta),
+\sin(\theta), \dot{\theta}) $. Pour l'affichage de la critique et de l'acteur,
+nous pensons que $ \cos(\theta) $ et $ \dot{\theta} $ sont les paramètres les
+plus importants. En effet, $ \cos(\theta) $ et $ \sin(\theta) $ ont des
+informations similaires sur l'état. Comme la référence de $ \theta $ est en
+haut, le cosinus nous donne l'information sur la hauteur du pendule et le sinus
+nous dit de quel côté il se trouve. Puisque la récompense est calculée selon
+l'équation~\eqref{eq:reward}, nous savons que seule la hauteur du pendule est
+récompensée. Par conséquent $ \sin(\theta) $ ne fournit pas une information
+utile sur la récompense donnée à l'agent. Donc nous décidons d'afficher les
+graphes de la critique et de l'acteur en fonction de $ \cos(\theta) $ et $
+\dot{\theta} $. Pour ce faire, nous ajoutons un \emph{wrapper} pour échanger la
+seconde composante de l'état avec la dernière.
 
 \begin{equation}
     r(\theta, \dot{\theta}, a)= -(\theta^{2} + 0,1 \times \dot{\theta}^{2} + 0,001 \times a^{2})
@@ -52,7 +67,7 @@ Le problème du pendule inversé définit son état par le n--uplet $ (\cos(\the
     \label{fig:preli_discount}
 \end{figure}
 
-La figure~\ref{fig:preli_discount} nous montre un résultat aberrant où l'acteur converge vers une action uniforme de 1 sur l'ensemble des états qu'il peut atteindre. La \emph{heatmap} de la critique montre une préférence quand $\cos(\theta) = 1$ et c'est ce que nous voulons pour que le pendule reste à l'équilibre tout en haut. Mais on observe aussi que la zone de préférence n'est pas pour $\dot{\theta} = 0$ alors que nous souhaitons que le pendule soit immobile à la position désirée.
+La figure~\ref{fig:preli_discount} nous montre un résultat aberrant où l'acteur converge vers une action uniforme à 1 sur l'ensemble des états qu'il peut atteindre. La \emph{heatmap} de la critique montre une préférence quand $\cos(\theta) = 1$ et c'est ce que nous voulons pour que le pendule reste à l'équilibre tout en haut. Mais nous observons aussi que la zone de préférence n'est pas pour $\dot{\theta} = 0$ alors que nous souhaitons que le pendule soit immobile à la position désirée.
 
 \begin{figure}[H]
     \centering
@@ -92,8 +107,8 @@ La figure~\ref{fig:preli_normalise} montre le même problème pour l'acteur apr�
     \label{fig:preli_sum}
 \end{figure}
 
-La figure~\ref{fig:preli_sum} présente également le résultat absurde sur l'acteur entraîné uniforme et unitaire sur l'ensemble des états. On observe par contre une zone de préférence pour $\cos(\theta) = 1$, c'est à dire la position souhaitée du pendule. Mais ici encore, pour $\dot{\theta}$, la zone de préférence n'est pas encore assez proche de 0 pour être satisfaisante.
+La figure~\ref{fig:preli_sum} présente également le résultat absurde sur l'acteur entraîné uniforme et unitaire sur l'ensemble des états. Nous observons par contre une zone de préférence pour $\cos(\theta) = 1$, c'est à dire la position souhaitée du pendule. Mais ici encore, pour $\dot{\theta}$, la zone de préférence n'est pas encore assez proche de 0 pour être satisfaisante.
 
 Pour les trois méthodes de calcul de la récompense sur une trajectoire, la critique ne présente pas un maximum pour les états optimaux. Nous remarquons que les zones chaudes sont très vastes. Nous en déduisons que la critique est de mauvaise qualité par manque d'exploration.
 
-La récompense maximum est estimée pour $\dot{\theta} \not= 0$. Donc l'agent n'a vu cette récompense que lorsque qu'il poussait à pleine vitesse. Donc le gradient de la critique a poussé la politique à toujours utiliser le couple maximum. D'où le fait que les acteurs renvoient toujours $1$ (soit le couple maximum dans le sens direct).
+La récompense maximale est estimée pour $\dot{\theta} \not= 0$. Donc l'agent n'a vu cette récompense que lorsque qu'il poussait à pleine vitesse. Ainsi le gradient de la critique a poussé la politique à toujours utiliser le couple maximum. D'où le fait que les acteurs renvoient toujours $1$ (soit le couple maximum dans le sens direct).
