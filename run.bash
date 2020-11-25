@@ -7,8 +7,8 @@ python3 main.py \
   --gradients discount \
   --critic_estim_method td \
   --team_name beroujon-cormee \
-  --nb_repet 10 \
-  --nb_trajs 800 \
+  --nb_repet 1 \
+  --nb_trajs 400 \
   --max_episode_steps 200 \
   --update_threshold 1000 \
   --nb_updates 20 \
@@ -19,4 +19,4 @@ python3 main.py \
   --lr_actor 0.0005 \
   --lr_critic 0.001 \
   --init_alpha 0.02 \
-  --lr_alpha 0.001
+  --lr_alpha 0.0

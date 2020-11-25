@@ -82,7 +82,7 @@ class DoubleQNet:
         state, action, reward, next_state, d = mini_batch
 
         with torch.no_grad():
-            action_policy, log_prob = policy(next_state)
+            action_policy, log_prob = policy.real_action(next_state)
             entropy = -policy.log_alpha.exp() * log_prob
             min_q = self.forward(next_state, action_policy, using_target=True)
             target = reward + self.gamma * d * (min_q + entropy)

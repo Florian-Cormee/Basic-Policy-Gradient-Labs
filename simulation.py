@@ -41,7 +41,7 @@ class Simulation:
         score = 0
 
         while not is_done:
-            action, _ = policy.forward(torch.from_numpy(state).float())  # action selection
+            action, _ = policy.real_action(torch.from_numpy(state).float())  # action selection
             next_state, reward, is_done, _ = self.env.step([action.item()])
             # add of the global state in the replay buffer
             if memory is not None:

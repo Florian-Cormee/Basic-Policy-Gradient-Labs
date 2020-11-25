@@ -20,7 +20,9 @@ class GenericNet(nn.Module):
         Args:
             filename (str): The filename, including the path.
         """
-        torch.save(self, filename)
+        #torch.save(self, filename)
+        scripted = torch.jit.script(self)
+        torch.jit.save(scripted, filename)
 
     def load_model(self, filename):
         """Load a neural network model from a file.
@@ -44,4 +46,3 @@ class GenericNet(nn.Module):
         self.optimizer.zero_grad()
         loss.sum().backward()
         self.optimizer.step()
-

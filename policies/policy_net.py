@@ -6,6 +6,7 @@ import torch.nn.functional as F
 import torch.optim as optim
 
 from policies import GenericNet
+from typing import List
 
 
 class PolicyNet(GenericNet):
@@ -52,6 +53,10 @@ class PolicyNet(GenericNet):
         state = F.relu(self.fc1(state))
         mu = self.fc_mu(state)
         std = F.softplus(self.fc_std(state))
+        return mu, std
+
+    def real_action(self, state):
+        mu, std = self.forward(state)
         dist = Normal(mu, std)
         action = dist.rsample()
         log_prob = dist.log_prob(action)
@@ -59,7 +64,8 @@ class PolicyNet(GenericNet):
         real_log_prob = log_prob - torch.log(1 - torch.tanh(action).pow(2) + 1e-7)
         return real_action, real_log_prob
 
-    def select_action(self, state, deterministic=False):
+    @torch.jit.export
+    def select_action(self, state: List[float], deterministic: bool=False) -> List[float]:
         """Compute an action or vector of actions given a state or vector of states.
 
         Args:
@@ -69,18 +75,10 @@ class PolicyNet(GenericNet):
         Returns:
             numpy.ndarray: The resulting action(s).
         """
-        with torch.no_grad():
-            state = torch.from_numpy(state).float()
-            x = F.relu(self.fc1(state))
-            mu = self.fc_mu(x)
-            std = F.softplus(self.fc_std(x))
-            if deterministic:
-                action = mu
-            else:
-                dist = Normal(mu, std)
-                action = dist.rsample()
-            real_action = self.rescale_action(torch.tanh(action))  # Rescale the action space to match the environment
-            return real_action.data.numpy().astype(float)
+        mu, std = self.forward(torch.tensor(state).float())
+        real_action = self.rescale_action(torch.tanh(mu))  # Rescale the action space to match the environment
+        act: List[float] = real_action.data.tolist()
+        return act
 
     def train_net(self, critic, mini_batch):
         """Train the network.
@@ -91,7 +89,7 @@ class PolicyNet(GenericNet):
             the next state and 1 - done in each row.
         """
         state, action, _, next_state, _ = mini_batch
-        action_policy, log_prob = self.forward(next_state)
+        action_policy, log_prob = self.real_action(next_state)
         entropy = -self.log_alpha.exp() * log_prob
 
         q_value = critic.forward(state, action_policy)

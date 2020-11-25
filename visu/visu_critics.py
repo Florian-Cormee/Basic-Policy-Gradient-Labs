@@ -255,7 +255,7 @@ def plot_qfunction_ND(qfunction, policy, env, plot=True, figname="qfunction_cont
             for i in range(2, len(state_min)):
                 z = random.random() - 0.5
                 state = np.append(state, z)
-            action = policy.select_action(state)
+            action = np.array(policy.select_action(state))
             portrait[definition - (1 + index_y), index_x] = qfunction.evaluate(state, action)
 
     plt.figure(figsize=(10, 10))

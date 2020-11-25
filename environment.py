@@ -27,7 +27,7 @@ def make_env(env_name, policy_type, max_episode_steps, env_obs_space_name=None):
 
     env.observation_space.names = env_obs_space_name
 
-    env = FeatureInverter(env, 1, 2)  # MODIFIED: Invert sin(theta) and theta dot
+    #env = FeatureInverter(env, 1, 2)  # MODIFIED: Invert sin(theta) and theta dot
 
     env = PerfWriter(env)
     print(env)
