@@ -27,6 +27,7 @@ class PolicyNet(GenericNet):
         """
         super(PolicyNet, self).__init__()
         self.fc1 = nn.Linear(state_size, hidden_layer)
+        # self.fc2 = nn.Linear(hidden_layer, hidden_layer)
         self.fc_mu = nn.Linear(hidden_layer, 1)
         self.fc_std = nn.Linear(hidden_layer, 1)
         self.optimizer = optim.Adam(self.parameters(), lr=learning_rate)
@@ -50,9 +51,10 @@ class PolicyNet(GenericNet):
         Returns:
            torch.Tensor: The action to perform.
         """
-        state = F.relu(self.fc1(state))
-        mu = self.fc_mu(state)
-        std = F.softplus(self.fc_std(state))
+        x = F.relu(self.fc1(state))
+        # x = F.relu(self.fc2(x))
+        mu = self.fc_mu(x)
+        std = F.softplus(self.fc_std(x))
         return mu, std
 
     def real_action(self, state):

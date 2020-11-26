@@ -8,7 +8,7 @@ python3 main.py \
   --critic_estim_method td \
   --team_name beroujon-cormee \
   --nb_repet 1 \
-  --nb_trajs 400 \
+  --nb_trajs 800 \
   --max_episode_steps 200 \
   --update_threshold 1000 \
   --nb_updates 20 \

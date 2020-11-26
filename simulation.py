@@ -73,11 +73,10 @@ class Simulation:
             int: The mediane score of the policy.
         """
         with torch.no_grad():
-            scores = []
+            scores = 0.0
             for _ in range(self.nb_evaluation):
-                scores.append(self._perform_episode(policy))
-            scores = np.array(scores)
-            return np.mean(scores)
+                scores += self._perform_episode(policy)
+            return scores / self.nb_evaluation
 
 
 

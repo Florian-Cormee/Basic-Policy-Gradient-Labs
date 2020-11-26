@@ -20,11 +20,11 @@ def evaluate_pol(env, policy, deterministic):
     for i in range(900):
         print("Iteration {} out of 900".format(i + 1), end="\r")
         state = env.reset()
-        # env.render(mode='rgb_array')
         # print("new episode")
         total_reward = 0
 
         for _ in count():
+            #env.render(mode='rgb_array')
             action = policy.select_action(state, deterministic)
             next_state, reward, done, _ = env.step(action)
             total_reward += reward
@@ -51,7 +51,7 @@ class Evaluator:
     def load_policies(self, folder) -> None:
         """
          :param: folder : name of the folder containing policies
-         Output : none (policies of the folder stored in self.env_dict)        
+         Output : none (policies of the folder stored in self.env_dict)
          """
         listdir = os.listdir(folder)
         for policy_file in listdir:
