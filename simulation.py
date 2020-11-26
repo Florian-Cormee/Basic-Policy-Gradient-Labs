@@ -1,5 +1,5 @@
 import torch
-import numpy as np
+
 
 class Simulation:
     def __init__(self, env, nb_episodes=400, update_threshold=1000, nb_updates=20, batch_size=32, print_interval=20):
@@ -24,7 +24,7 @@ class Simulation:
         self.nb_evaluation = 20
         self.save_best_policy = True
 
-    def _perform_episode(self, policy, memory=None):
+    def _perform_episode(self, policy, memory=None, render=False):
         """Let the policy perform one episode.
 
         Each state, action, reward, done state and next state tuple can be stored in a memory.
@@ -42,6 +42,8 @@ class Simulation:
 
         while not is_done:
             action, _ = policy.real_action(torch.from_numpy(state).float())  # action selection
+            if render:
+                self.env.render(mode='rgb_array')
             next_state, reward, is_done, _ = self.env.step([action.item()])
             # add of the global state in the replay buffer
             if memory is not None:
@@ -78,8 +80,6 @@ class Simulation:
                 scores += self._perform_episode(policy)
             return scores / self.nb_evaluation
 
-
-
     def train(self, memory, policy_wrapper, critic, policy_loss_file, critic_loss_file):
         """Train the actor and the critic using the given memory.
 
@@ -94,7 +94,7 @@ class Simulation:
         score = 0.0
         policy = policy_wrapper.policy
         for episode in range(self.nb_episodes):
-            score_episode = self._perform_episode(policy, memory)
+            score_episode = self._perform_episode(policy, memory)  # render=episode % self.print_interval == 0
             score += score_episode
 
             if memory.size() > self.update_threshold:
@@ -113,7 +113,7 @@ class Simulation:
             if self.save_best_policy and 4 * episode > 3 * self.nb_episodes:
                 self.env.set_reward_flag(False)
                 policy_score = self._evaluate_policy(policy)
-                if 10 * policy_score > 11 * self.best_rew:
+                if policy_score > self.best_rew:  #10 * policy_score > 11 * self.best_rew:
                     if policy_score > self.best_rew:
                         self.best_rew = policy_score
                     policy_wrapper.save(self.best_rew)

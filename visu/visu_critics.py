@@ -213,7 +213,7 @@ def plot_qfunction_2D(qfunction, policy, env, plot=True, figname="qfunction_cont
     for index_x, x in enumerate(np.linspace(x_min, x_max, num=definition)):
         for index_y, y in enumerate(np.linspace(y_min, y_max, num=definition)):
             state = np.array([x, y])
-            action = policy.select_action(state)
+            action = np.array(policy.select_action(state))
             portrait[definition - (1 + index_y), index_x] = qfunction.evaluate(state, action)
 
     plt.figure(figsize=(10, 10))

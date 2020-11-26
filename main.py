@@ -4,6 +4,7 @@ from arguments import get_args
 from chrono import Chrono
 from critics import DoubleQNet
 from environment import make_env
+import expert_policy
 from memory import ReplayBuffer
 from policies.policy_net import PolicyNet
 from simulation import Simulation
@@ -47,7 +48,6 @@ def main(params) -> None:
 
     simulation = Simulation(env, params.nb_trajs, params.update_threshold, params.nb_updates, params.batch_size,
                             params.print_interval)
-    simulation.rescale_reward = lambda reward: reward / 10
 
     policy_loss_file, critic_loss_file = set_files(params.gradients[0], params.env_name)
 
@@ -58,13 +58,23 @@ def main(params) -> None:
         memory = ReplayBuffer()
 
         # Initialise the policy/actor
-        policy = PolicyNet(params.lr_actor, params.init_alpha, params.lr_alpha, params.target_entropy_alpha)
+        policy = PolicyNet(params.lr_actor, params.init_alpha, params.lr_alpha, params.target_entropy_alpha,
+                           state_size=env.observation_space.shape[0])
         pw = PolicyWrapper(policy, params.policy_type, params.env_name, params.team_name, params.max_episode_steps)
         pw.duration_flag = False
         # Initialise the critics
-        critic = DoubleQNet(params.lr_critic,params.gamma, params.tau)
+        critic = DoubleQNet(params.lr_critic, params.gamma, params.tau, state_size=env.observation_space.shape[0])
 
         plot_policy(policy, env, True, params.env_name, params.study_name, '_ante_', j, plot=False)
+
+        if params.env_name == 'Pendulum-v0':
+            policy.action_scale = 2.0
+            simulation.rescale_reward = lambda reward: reward / 10.0
+        if params.env_name == 'MountainCarContinuous-v0':
+            simulation.rescale_reward = lambda reward: reward
+            expert_policy.expert_episodes_continuous(env, memory, 50)
+            for _ in range(1000):
+                simulation._update_networks(memory, policy, critic)
 
         simulation.train(memory, pw, critic, policy_loss_file, critic_loss_file)
 

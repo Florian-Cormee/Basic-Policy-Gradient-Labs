@@ -4,20 +4,21 @@ from critics.q_net import QNet
 
 
 class DoubleQNet:
-    def __init__(self, learning_rate, gamma=0.98, tau=0.01):
+    def __init__(self, learning_rate, gamma=0.98, tau=0.01, state_size=3):
         """Build a double Q network.
 
         Args:
             learning_rate (float): The learning rate for both Q networks.
             gamma (float): The reward decay.
             tau (float): The rate between 0 and 1 used to update the target networks.
+            state_size (int): The length of the state vector.
         """
         self.gamma = gamma
 
-        self.q1 = QNet(learning_rate, tau)
-        self.q2 = QNet(learning_rate, tau)
-        self.q1_target = QNet(learning_rate)
-        self.q2_target = QNet(learning_rate)
+        self.q1 = QNet(learning_rate, tau, state_size=state_size)
+        self.q2 = QNet(learning_rate, tau, state_size=state_size)
+        self.q1_target = QNet(learning_rate, state_size=state_size)
+        self.q2_target = QNet(learning_rate, state_size=state_size)
         self.q1_target.load_state_dict(self.q1.state_dict())
         self.q2_target.load_state_dict(self.q2.state_dict())
 

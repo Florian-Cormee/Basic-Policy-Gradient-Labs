@@ -12,7 +12,7 @@ python3 main.py \
   --max_episode_steps 200 \
   --update_threshold 1000 \
   --nb_updates 20 \
-  --batch_size 32 \
+  --batch_size 256 \
   --print_interval 20 \
   --gamma 0.98 \
   --tau 0.01 \

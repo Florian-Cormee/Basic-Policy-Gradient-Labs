@@ -108,7 +108,7 @@ def plot_policy_2D(policy, env, deterministic, plot=True, figname='stoch_actor.p
         for index_y, y in enumerate(np.linspace(y_min, y_max, num=definition)):
             # Be careful to fill the matrix in the right order
             state = np.array([[x, y]])
-            action = policy.select_action(state, deterministic)
+            action = np.array(policy.select_action(state, deterministic))
             if hasattr(action, "__len__"):
                 action = action[0]
             portrait[definition - (1 + index_y), index_x] = action

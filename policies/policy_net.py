@@ -38,9 +38,11 @@ class PolicyNet(GenericNet):
         self.log_alpha_optimizer = optim.Adam([self.log_alpha], lr=lr_alpha)
 
         self.losses = None
+        self.fixed_std = None
+        self.action_scale = 1.0
 
     def rescale_action(self, action):
-        return 2.0 * action
+        return self.action_scale * action
 
     def forward(self, state):
         """Forward the state through the network.
@@ -59,6 +61,8 @@ class PolicyNet(GenericNet):
 
     def real_action(self, state):
         mu, std = self.forward(state)
+        if self.fixed_std is not None:
+            std = self.fixed_std
         dist = Normal(mu, std)
         action = dist.rsample()
         log_prob = dist.log_prob(action)
