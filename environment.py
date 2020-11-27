@@ -2,7 +2,7 @@ import gym
 from gym.wrappers import TimeLimit
 import numpy as np
 
-from wrappers import FeatureInverter, PerfWriter
+from wrappers import PerfWriter
 
 
 def make_env(env_name, policy_type, max_episode_steps, env_obs_space_name=None):
@@ -27,12 +27,6 @@ def make_env(env_name, policy_type, max_episode_steps, env_obs_space_name=None):
 
     env.observation_space.names = env_obs_space_name
 
-    #env = FeatureInverter(env, 1, 2)  # MODIFIED: Invert sin(theta) and theta dot
-
     env = PerfWriter(env)
     print(env)
     return env
-
-# to see the list of available gym environments, type:
-# from gym import envs
-# print(envs.registry.all())

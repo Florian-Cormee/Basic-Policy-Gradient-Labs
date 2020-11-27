@@ -4,7 +4,7 @@ import random
 import torch
 
 
-class ReplayBuffer():
+class ReplayBuffer:
     def __init__(self, limit=50_000):
         """Build a replay buffer.
 

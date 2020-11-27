@@ -94,7 +94,7 @@ class Simulation:
         score = 0.0
         policy = policy_wrapper.policy
         for episode in range(self.nb_episodes):
-            score_episode = self._perform_episode(policy, memory)  # render=episode % self.print_interval == 0
+            score_episode = self._perform_episode(policy, memory)
             score += score_episode
 
             if memory.size() > self.update_threshold:
